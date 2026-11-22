@@ -4,6 +4,9 @@ const getApiBase = (): string => {
     const clean = env.replace(/\/+$/, '');
     return clean.endsWith('/api') ? clean : `${clean}/api`;
   }
+  if (typeof window !== 'undefined' && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+    return "https://treat2risk-ai-production.up.railway.app/api";
+  }
   return "http://127.0.0.1:8000/api";
 };
 
@@ -17,6 +20,9 @@ const getWsBase = (): string => {
     const wsProto = clean.startsWith('https') ? 'wss' : 'ws';
     const host = clean.replace(/^https?:\/\//, '');
     return `${wsProto}://${host}/ws/events`;
+  }
+  if (typeof window !== 'undefined' && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+    return "wss://treat2risk-ai-production.up.railway.app/ws/events";
   }
   return "ws://127.0.0.1:8000/ws/events";
 };
